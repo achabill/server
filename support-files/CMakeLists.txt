@@ -77,11 +77,13 @@ IF(UNIX)
     DESTINATION ${inst_location} COMPONENT SupportFiles)
 
   IF(HAVE_SYSTEMD)
-    CONFIGURE_FILE(mariadb@.service.in
-                   ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service @ONLY)
-    INSTALL(FILES wsrep-new-cluster.conf mariadb.service
-            ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service
-            DESTINATION ${inst_location}/systemd COMPONENT SupportFiles)
+    IF(NOT RPM)
+      CONFIGURE_FILE(mariadb@.service.in
+                     ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service @ONLY)
+      INSTALL(FILES wsrep-new-cluster.conf mariadb.service
+              ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service
+              DESTINATION ${inst_location}/systemd COMPONENT SupportFiles)
+    ENDIF()
     IF(INSTALL_SYSTEMD_UNITDIR)
       # @ in directory name broken between CMake version 2.8.12.2 and 3.3
       # http://public.kitware.com/Bug/view.php?id=14782
