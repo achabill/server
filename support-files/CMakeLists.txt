@@ -85,11 +85,16 @@ IF(UNIX)
     IF(INSTALL_SYSTEMD_UNITDIR)
       # @ in directory name broken between CMake version 2.8.12.2 and 3.3
       # http://public.kitware.com/Bug/view.php?id=14782
-      INSTALL(FILES wsrep-new-cluster.conf
-              DESTINATION
-              "${INSTALL_SYSTEMD_UNITDIR}/mariadb@bootstrap.service.d"
-              COMPONENT Server)
-      INSTALL(FILES mariadb.service ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service
+      IF(NOT RPM)
+        INSTALL(FILES wsrep-new-cluster.conf
+                DESTINATION
+                "${INSTALL_SYSTEMD_UNITDIR}/mariadb@bootstrap.service.d"
+                COMPONENT Server)
+        INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service
+                DESTINATION ${INSTALL_SYSTEMD_UNITDIR} COMPONENT Server)
+      ENDIF()
+
+      INSTALL(FILES mariadb.service
               DESTINATION ${INSTALL_SYSTEMD_UNITDIR} COMPONENT Server)
     ENDIF()
   ENDIF()
