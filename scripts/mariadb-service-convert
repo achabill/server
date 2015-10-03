@@ -59,10 +59,11 @@ if [ -n "$mysqld_ld_library_path" ]; then
 fi
 
 if [[ $want_syslog -eq 1 ]]; then
+  echo StandardOutput=syslog
   echo StandardError=syslog
   echo SyslogFacility=daemon
-  echo SyslogLevel=error
-  echo SyslogLevelPrefix=${syslog_tag_mysqld}
+  echo SyslogLevel=err
+  echo SyslogIdentifier=${syslog_tag_mysqld}
 fi
 
 if [[ "${flush_caches}" -gt 0  ]]; then
