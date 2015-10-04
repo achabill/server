@@ -20,6 +20,11 @@
 #define MY_SYSTEMD_INCLUDED
 
 #if defined(HAVE_SYSTEMD) && !defined(EMBEDDED_LIBRARY)
+/*
+  sd-daemon.h may include inttypes.h. Explicitly request format macros before
+  the first inclusion of inttypes.h.
+*/
+#define __STDC_FORMAT_MACROS
 #include <systemd/sd-daemon.h>
 #else
 #define sd_notify(X, Y)
