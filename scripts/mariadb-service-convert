@@ -77,4 +77,6 @@ if [[ "${numa_interleave}" -gt 0 ]]; then
   echo
 fi
 
-[ -n "${CRASH_SCRIPT}" ] && echo FailureAction=${CRASH_SCRIPT}
+if [ -n "${CRASH_SCRIPT}" ]; then
+  echo FailureAction=${CRASH_SCRIPT}
+fi
