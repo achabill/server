@@ -77,10 +77,13 @@ IF(UNIX)
     DESTINATION ${inst_location} COMPONENT SupportFiles)
 
   IF(HAVE_SYSTEMD)
+    CONFIGURE_FILE(mariadb.service.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/mariadb.service @ONLY)
     IF(NOT RPM)
       CONFIGURE_FILE(mariadb@.service.in
                      ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service @ONLY)
-      INSTALL(FILES wsrep-new-cluster.conf mariadb.service
+      INSTALL(FILES wsrep-new-cluster.conf
+              ${CMAKE_CURRENT_BINARY_DIR}/mariadb.service
               ${CMAKE_CURRENT_BINARY_DIR}/mariadb@.service
               DESTINATION ${inst_location}/systemd COMPONENT SupportFiles)
     ENDIF()
@@ -96,7 +99,7 @@ IF(UNIX)
                 DESTINATION ${INSTALL_SYSTEMD_UNITDIR} COMPONENT Server)
       ENDIF()
 
-      INSTALL(FILES mariadb.service
+      INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/mariadb.service
               DESTINATION ${INSTALL_SYSTEMD_UNITDIR} COMPONENT Server)
     ENDIF()
   ENDIF()

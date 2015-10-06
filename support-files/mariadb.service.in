@@ -51,6 +51,7 @@ User=mysql
 # Use the [service] section and Environment="EXTRA_ARGS=...".
 # This isn't a replacement for my.cnf.
 ExecStart=/usr/sbin/mysqld $EXTRA_ARGS
+@SYSTEMD_EXECSTARTPOST@
 
 KillMode=process
 KillSignal=SIGTERM
@@ -58,9 +59,7 @@ KillSignal=SIGTERM
 # Don't want to see an automated SIGKILL ever
 SendSIGKILL=no
 
-# Exit status 1 is a fatal config error. Restarting won't help.
-RestartPreventExitStatus=1
-Restart=on-failure
+Restart=on-abort
 RestartSec=5s
 
 PrivateDevices=true

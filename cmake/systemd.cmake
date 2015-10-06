@@ -60,6 +60,9 @@ MACRO(CHECK_SYSTEMD)
                                ${INSTALL_SYSTEMD_UNITDIR}/mariadb.service
                                ${INSTALL_SYSTEMD_UNITDIR}/mariadb@.service
                                ${INSTALL_SYSTEMD_UNITDIR}/mariadb@bootstrap.service.d/wsrep-new-cluster.conf")
+        IF(DEB)
+          SET(SYSTEMD_EXECSTARTPOST "ExecStartPost=/etc/mysql/debian-start")
+        ENDIF()
         MESSAGE(STATUS "Systemd features enabled")
       ELSE()
         UNSET(LIBSYSTEMD)
