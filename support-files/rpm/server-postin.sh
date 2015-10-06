@@ -6,9 +6,9 @@ if [ -f /usr/lib/systemd/system/mariadb.service -a -x /usr/bin/systemctl ]; then
     %{_bindir}/mariadb-service-convert > "${systemd_conf}"
     # Make sure old possibly non-systemd instance is down
     if [ $1 = 2 ]; then
-      SYSTEMCTL_SKIP_REDIRECT %{_sysconfdir}/etc/init.d/mysql stop > /dev/null 2>&1 || :
+      %{_sysconfdir}/etc/init.d/mysql stop > /dev/null 2>&1 || :
     fi
-    systemctl preset mariadb.service >/dev/null 2>&1 || :
+    systemctl enable mariadb.service >/dev/null 2>&1 || :
   fi
 fi
 
